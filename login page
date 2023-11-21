@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 1em;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+        }
+
+        #wordCount {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            color: #555;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #007bff; /* Blue background color */
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+        .confirmation-container {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        h2 {
+            color: #007bff; /* Blue text color */
+        }
+
+        p {
+            margin-top: 20px;
+        }
+    </style>
+    <title>Write Your Travel Blog</title>
+</head>
+<body>
+    <header>
+        <h1>Write Your Travel Blog</h1>
+    </header>
+
+    <div class="container" id="blogContainer">
+        <label for="blogTitle"><b>Title Of Your Blog:</b></label>
+        <input type="text" id="blogTitle" name="blogTitle" required>
+
+        <label for="blogURL"><b>URL Of Your blog:</b></label>
+        <input type="text" id="blogURL" name="blogURL" placeholder="e.g. mytravelblog" required>
+
+        <label for="blogContent"><b>Write The Content Of Your Blog:</b></label>
+        <div style="position: relative;">
+            <textarea id="blogContent" name="blogContent" rows="8" oninput="countCharacters()" required></textarea>
+            <p id="wordCount">Characters: 0/300</p>
+        </div>
+
+        <button type="button" onclick="submitBlog()">Publish Blog</button>
+    </div>
+
+    <div class="container confirmation-container" id="confirmationContainer">
+        <h2>Your travel blog has been successfully published!</h2>
+        <p>Thank you for sharing your experiences.</p>
+    </div>
+
+    <script>
+        function submitBlog() {
+            var blogTitle = document.getElementById("blogTitle").value;
+            var blogURL = document.getElementById("blogURL").value;
+            var blogContent = document.getElementById("blogContent").value;
+
+            // Check if title, URL, and content are not empty
+            if (blogTitle !== "" && blogURL !== "" && blogContent !== "") {
+                // Show the confirmation container and hide the blog container
+                document.getElementById("blogContainer").style.display = "none";
+                document.getElementById("confirmationContainer").style.display = "block";
+            } else {
+                alert("Please enter title, URL, and content for your travel blog.");
+            }
+        }
+
+        function countCharacters() {
+            var content = document.getElementById("blogContent").value;
+            var charCount = content.length;
+
+            document.getElementById("wordCount").innerText = "Characters: " + charCount + "/300";
+
+            if (charCount > 300) {
+                alert("Character limit exceeded (maximum 300 characters).");
+                // Optionally, you can limit the content length or provide feedback to the user.
+            }
+        }
+    </script>
+</body>
+</html>
