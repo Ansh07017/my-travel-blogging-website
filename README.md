@@ -1,88 +1,61 @@
-🧳 My Travel Blogging Website
+WanderNestle Travel Blog
+Overview
+WanderNestle is a travel blogging platform that enables users to share their travel memories and discover amazing destinations. The application provides a comprehensive experience for travel enthusiasts to create, share, and explore travel content including blogs, photos, and videos. The platform features a modern dark-themed interface inspired by travel and lifestyle platforms like Airbnb, emphasizing visual storytelling and immersive user experiences.
 
-A responsive and interactive Travel Blogging Website where users can share their travel experiences, explore blog posts, and relive memories with stunning visuals. Built with HTML, CSS, and JavaScript, and designed to be lightweight yet expandable.
+User Preferences
+Preferred communication style: Simple, everyday language.
 
-✨ Features
-
-📝 Travel Blogs – Create and view travel stories with rich formatting.
-
-🎞️ Image Slider – Highlight destinations with animated image sliders.
-
-🎨 Animations – Smooth transitions and hover effects for an engaging UI.
-
-📱 Responsive Design – Works seamlessly on mobile, tablet, and desktop.
-
-💾 Login Page – User login form (expandable into full authentication).
-
-📸 Memories Page – Showcase personal travel memories with photo galleries.
-
-🛠️ Tech Stack
-
-Frontend: HTML5, CSS3, JavaScript (Vanilla)
-
-Styling: Custom CSS (optionally extendable with Tailwind/Bootstrap)
-
-Animations: CSS Transitions & JavaScript-based effects
-
-Future Expansion: Node.js / Express for backend APIs, MongoDB or Firebase for data
-
-🚀 Getting Started
-1. Clone the Repository
-git clone https://github.com/Ansh07017/my-travel-blogging-website.git
-cd my-travel-blogging-website
-
-2. Open Locally
-
-Since it’s a static site, you can open index.html directly in your browser.
-Or serve it locally using VS Code Live Server or Python:
-
-# Using Python (for quick local server)
-python -m http.server 8000
-
-
-Then visit 👉 http://localhost:8000
-
-📂 Project Structure
-my-travel-blogging-website/
-│── index.html        # Homepage
-│── blogpage.html     # Travel blogs listing
-│── login.html        # Login form
-│── memories.html     # Memories / gallery
-│── style.css         # Main styles
-│── script.js         # Main JS logic
-│── /assets           # Images, icons, etc.
-└── /server           # Backend setup (future expansion)
-
-🖼️ Screenshots
-
-(Add screenshots here once hosted – e.g., homepage, blog view, memories page.)
-
-🌟 Future Enhancements
-
-✍️ Blog Editor (Markdown / Rich Text)
-
-👤 User Authentication & Profiles
-
-💬 Comment Section
-
-🗺️ Interactive Maps with travel routes
-
-📊 Analytics Dashboard for blog performance
-
-🤝 Contributing
-
-Contributions are welcome!
-
-Fork the repo
-
-Create a new branch (feature/new-feature)
-
-Commit your changes
-
-Push to the branch
-
-Create a Pull Request
-
-📜 License
-
-This project is licensed under the MIT License – feel free to use and modify it.
+System Architecture
+Frontend Architecture
+Framework: React 18 with TypeScript for type safety and modern development practices
+Routing: Wouter for lightweight client-side routing with support for home page and blog creation
+Styling: Tailwind CSS with custom dark theme configuration, featuring a sophisticated color palette with primary colors (#222 background, #333 elevated surfaces, #3867d6 brand accent)
+UI Components: Comprehensive component library using Radix UI primitives with shadcn/ui styling system for consistency and accessibility
+State Management: TanStack Query (React Query) for server state management with optimistic updates and caching
+Typography: Nunito font family from Google Fonts, providing modern, readable sans-serif typography perfect for travel content
+Backend Architecture
+Runtime: Node.js with Express.js server framework
+Language: TypeScript with ES modules for modern JavaScript features
+API Design: RESTful API endpoints following conventional HTTP methods (GET, POST, PUT, DELETE)
+Development Setup: Vite for fast development with hot module replacement and build optimization
+Session Management: Express sessions with PostgreSQL session store using connect-pg-simple
+Data Storage Solutions
+Database: PostgreSQL as the primary database with Neon serverless hosting
+ORM: Drizzle ORM for type-safe database operations and schema management
+Schema Design:
+Users table with username/password authentication
+Blog posts table with comprehensive fields (title, content, excerpt, author, destination, imageUrl, tags, timestamps)
+UUID primary keys for scalability and security
+Development Storage: In-memory storage implementation for development and testing environments
+Content Management
+Blog System: Full CRUD operations for travel blog posts with rich content support
+Media Handling: Image URL storage with support for travel destination imagery
+Tagging System: Array-based tag system for categorizing and discovering content
+Content Structure: Structured blog posts with titles, excerpts, full content, author attribution, and destination tracking
+Visual Design System
+Component Architecture: Modular section-based layout (Hero, Services, About, Gallery, Pricing, Reviews, Contact)
+Interactive Elements: Image slider with Swiper.js integration, hover effects, and smooth animations
+Navigation: Fixed header with smooth scroll navigation and responsive mobile menu
+Layout System: CSS Grid and Flexbox with responsive design patterns using rem-based spacing units
+External Dependencies
+Database & Storage
+Neon Database: Serverless PostgreSQL hosting with connection pooling
+Drizzle Kit: Database migrations and schema management tools
+UI & Styling
+Radix UI: Comprehensive collection of accessible, unstyled UI primitives
+Tailwind CSS: Utility-first CSS framework with custom configuration
+Lucide React: Modern icon library for consistent iconography
+Google Fonts: Web font service for Nunito typography
+Development & Build Tools
+Vite: Fast build tool and development server with React plugin
+Replit Integration: Development environment plugins for cartographer and dev banner
+ESBuild: Fast JavaScript bundler for production builds
+PostCSS: CSS processing with Tailwind and Autoprefixer plugins
+Form & Data Management
+React Hook Form: Performant form library with validation support
+Zod: TypeScript-first schema validation for runtime type checking
+TanStack Query: Powerful data synchronization and caching library
+Development Environment
+TypeScript: Static type checking with modern compiler options
+Path Aliasing: Simplified imports using @ and @shared path mapping
+Hot Reloading: Development server with instant updates and error overlays
