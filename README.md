@@ -133,7 +133,3 @@ Create a Pull Request
 
 📜 License
 This project is licensed under the MIT License.
-
-This project is licensed under the MIT License.
-
-👉 Do you want me to also create a shorter, beginner-friendly README (like your travel blog repo’s README) that’s less technical, for non-developer contributors?
