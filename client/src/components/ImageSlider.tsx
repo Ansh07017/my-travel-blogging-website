@@ -24,12 +24,25 @@ export default function ImageSlider({ autoplay = true, autoplayDelay = 4000 }: I
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set());
 
   const goToSlide = (index: number) => {
     if (isTransitioning) return;
     setIsTransitioning(true);
     setCurrentIndex(index);
-    setTimeout(() => setIsTransitioning(false), 500);
+    setTimeout(() => setIsTransitioning(false), 700);
+  };
+
+  const handleImageLoad = (index: number) => {
+    setLoadedImages(prev => {
+      const newSet = new Set(prev);
+      newSet.add(index);
+      if (newSet.size === 1 && !isLoaded) {
+        setIsLoaded(true);
+      }
+      return newSet;
+    });
   };
 
   const nextSlide = () => {
@@ -52,41 +65,67 @@ export default function ImageSlider({ autoplay = true, autoplayDelay = 4000 }: I
   return (
     <div 
       data-testid="image-slider"
-      className="relative w-full h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden rounded-lg"
+      className="relative w-full h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden rounded-lg shadow-2xl"
     >
-      {/* Image Container - Fixed positioning to prevent overlap */}
-      <div className="relative w-full h-full">
-        {images.map((image, index) => (
-          <div
-            key={index}
-            data-testid={`slide-${index}`}
-            className={`
-              absolute top-0 left-0 w-full h-full 
-              transition-all duration-500 ease-in-out
-              ${index === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'}
-              ${isTransitioning && index === currentIndex ? 'scale-105' : 'scale-100'}
-            `}
-            style={{
-              transform: `translateX(${(index - currentIndex) * 100}%)`,
-            }}
-          >
-            <img
-              src={image.src}
-              alt={image.alt}
-              className="w-full h-full object-cover"
-              draggable={false}
-            />
-            {/* Image overlay for better text readability */}
-            <div className="absolute inset-0 bg-black/20 z-1" />
-            
-            {/* Image title overlay */}
-            <div className="absolute bottom-4 left-4 z-20">
-              <h3 className="text-white text-xl md:text-2xl font-bold drop-shadow-lg">
-                {image.title}
-              </h3>
+      {/* Loading skeleton */}
+      {!isLoaded && (
+        <div className="absolute inset-0 bg-gray-200 animate-pulse z-30">
+          <div className="w-full h-full bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse">
+            <div className="absolute bottom-6 left-6 space-y-3">
+              <div className="h-8 bg-gray-400 rounded w-48"></div>
+              <div className="h-1 bg-gray-400 rounded w-12"></div>
             </div>
           </div>
-        ))}
+        </div>
+      )}
+      {/* Image Container - Enhanced wrapper with better positioning */}
+      <div className="relative w-full h-full">
+        {images.map((image, index) => {
+          const isActive = index === currentIndex;
+          const isPrev = index === (currentIndex - 1 + images.length) % images.length;
+          const isNext = index === (currentIndex + 1) % images.length;
+          
+          return (
+            <div
+              key={`slide-${index}`}
+              data-testid={`slide-${index}`}
+              className={`
+                absolute top-0 left-0 w-full h-full 
+                transition-all duration-700 ease-in-out
+                ${isActive ? 'opacity-100 z-20 scale-100' : 'opacity-0 z-10 scale-95'}
+                ${isTransitioning && isActive ? 'scale-105' : ''}
+              `}
+              style={{
+                transform: `translateX(${
+                  isActive ? '0%' : 
+                  isPrev ? '-100%' : 
+                  isNext ? '100%' : 
+                  index < currentIndex ? '-100%' : '100%'
+                }%) scale(${isActive ? 1 : 0.95})`,
+                transformOrigin: 'center center'
+              }}
+            >
+              <img
+                src={image.src}
+                alt={image.alt}
+                className="w-full h-full object-cover transition-transform duration-700"
+                draggable={false}
+                loading={index <= 2 ? "eager" : "lazy"}
+                onLoad={() => handleImageLoad(index)}
+              />
+              {/* Enhanced image overlay with gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10 z-1" />
+              
+              {/* Image title overlay with better positioning */}
+              <div className="absolute bottom-6 left-6 right-6 z-20">
+                <h3 className="text-white text-xl md:text-2xl lg:text-3xl font-bold drop-shadow-2xl">
+                  {image.title}
+                </h3>
+                <div className="w-12 h-1 bg-white/80 mt-2 rounded-full"></div>
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       {/* Navigation Buttons */}

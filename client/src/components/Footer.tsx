@@ -28,14 +28,14 @@ export default function Footer() {
   const contactInfo = [
     { 
       icon: Phone, 
-      text: '+1 (555) 123-4567', 
-      href: 'tel:+15551234567',
+      text: '7800425585', 
+      href: 'tel:+7800425585',
       onClick: () => console.log('Phone clicked') 
     },
     { 
       icon: Mail, 
       text: 'info@wandernestle.com', 
-      href: 'mailto:info@wandernestle.com',
+      href: 'mailto:pratapsingh07017.com',
       onClick: () => console.log('Email clicked') 
     },
     { 
@@ -146,7 +146,7 @@ export default function Footer() {
         {/* Credit/Copyright */}
         <div className="border-t border-border mt-8 pt-8 text-center">
           <p data-testid="footer-credit" className="text-muted-foreground">
-            © 2024 WanderNestle. All rights reserved. Built with ❤️ for travel enthusiasts.
+            © 2024 WanderNestle. All rights reserved. Built with ❤️ for travel enthusiasts, by Ansh Rajpoot.
           </p>
         </div>
       </div>

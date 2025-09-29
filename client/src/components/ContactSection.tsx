@@ -20,7 +20,7 @@ export default function ContactSection() {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -28,27 +28,48 @@ export default function ContactSection() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // TODO: Replace with actual form submission logic
-    console.log('Form submitted:', formData);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    toast({
-      title: "Message Sent!",
-      description: "We'll get back to you soon.",
-    });
+    try {
+      // 💡 CORRECTION: Appended '/json' to the Formspree endpoint URL
+      const response = await fetch("https://formspree.io/f/xwprvzgd/json", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      number: '',
-      subject: '',
-      message: '',
-    });
-    
-    setIsSubmitting(false);
+      const result = await response.json();
+
+      if (response.ok) {
+        toast({
+          title: "Message Sent! 🎉",
+          description: "We'll get back to you soon.",
+        });
+
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          number: '',
+          subject: '',
+          message: '',
+        });
+      } else {
+        // Handle Formspree specific errors (e.g., validation failures)
+        const errorMessage = result?.errors?.[0]?.message || result?.error || "Failed to send message";
+        throw new Error(errorMessage);
+      }
+    } catch (error) {
+      console.error("Submission Error:", error);
+      toast({
+        title: "Error 😕",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

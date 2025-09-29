@@ -79,9 +79,12 @@ export default function CreateBlogForm() {
     }));
   };
 
+  // Calculate word count for the content
+  const wordCount = formData.content.trim().split(/\s+/).filter(Boolean).length;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Basic validation
     if (!formData.title.trim()) {
       toast({
@@ -96,6 +99,16 @@ export default function CreateBlogForm() {
       toast({
         title: 'Validation Error',
         description: 'Please write some content for your blog.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    // Enforce minimum word count
+    if (wordCount < 150) {
+      toast({
+        title: 'Validation Error',
+        description: 'Your blog content must be at least 150 words long.',
         variant: 'destructive',
       });
       return;
@@ -249,7 +262,7 @@ export default function CreateBlogForm() {
 
               <div>
                 <Label htmlFor="content" className="text-base font-medium">
-                  Blog Content *
+                  Content * (Minimum 150 words)
                 </Label>
                 <p className="text-sm text-muted-foreground mb-2">
                   Tell us about your travel experience in detail
@@ -265,6 +278,9 @@ export default function CreateBlogForm() {
                   required
                   className="resize-none"
                 />
+                <div className={`text-sm mt-1 ${wordCount < 150 ? 'text-red-500' : 'text-green-600'}`}>
+                  Word count: {wordCount}/150 minimum
+                </div>
               </div>
 
               <div>
