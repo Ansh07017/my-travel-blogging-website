@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-
+import wandernestle from '@assets/generated_images/wandernestle.jpg';
 export default function AboutSection() {
   const scrollToContact = () => {
     const element = document.getElementById('contact');
@@ -15,18 +15,23 @@ export default function AboutSection() {
         </h2>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center max-w-6xl mx-auto">
+          
+
           <div data-testid="about-image" className="relative">
-            <Card className="overflow-hidden">
-              <div className="aspect-video bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                <div className="text-center p-8">
-                  <h3 className="text-2xl font-bold mb-4">WanderNestle Family</h3>
-                  <p className="text-muted-foreground">
-                    A community of passionate travelers sharing memories and experiences
-                  </p>
-                </div>
-              </div>
-            </Card>
-          </div>
+    <div className="overflow-hidden rounded-lg shadow-lg"> 
+        <img 
+            src={wandernestle} 
+            alt="WanderNestle Family Community of Travelers"
+            className="w-full h-64 object-cover" 
+        />
+        <div className="p-4 bg-white dark:bg-gray-800 text-center">
+            <h3 className="text-2xl font-bold mb-1">WanderNestle Family</h3>
+            <p className="text-muted-foreground text-sm">
+                A community of passionate travelers sharing memories and experiences
+            </p>
+        </div>
+    </div>
+</div>
           
           <div data-testid="about-content" className="space-y-6">
             <div>

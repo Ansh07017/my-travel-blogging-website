@@ -59,6 +59,7 @@ export default function Header() {
           >
             Gallery
           </button>
+          {/*
           <button
             data-testid="nav-plans"
             onClick={() => scrollToSection('plans')}
@@ -73,11 +74,13 @@ export default function Header() {
           >
             Blogs
           </button>
+          */}
           <button
             data-testid="nav-contact"
             onClick={() => scrollToSection('contact')}
             className="text-foreground hover:text-primary transition-colors"
           >
+            
             Contact
           </button>
         </nav>

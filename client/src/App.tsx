@@ -13,8 +13,8 @@ import AboutSection from "@/components/AboutSection";
 import GallerySection from "@/components/GallerySection";
 import BlogsSection from '@/components/BlogsSection';
 import InteractiveMap from '@/components/InteractiveMap';
-import PricingSection from "@/components/PricingSection";
-import ReviewsSection from "@/components/ReviewsSection";
+//import PricingSection from "@/components/PricingSection";
+//import ReviewsSection from "@/components/ReviewsSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import CreateBlog from "@/pages/CreateBlog";
@@ -43,8 +43,9 @@ function Home() {
               <InteractiveMap />
             </div>
           </section>
-          <ReviewsSection />
-          <PricingSection />
+          {/* <ReviewsSection />
+<PricingSection />
+*/}
           <ContactSection />
         </main>
         <Footer />
