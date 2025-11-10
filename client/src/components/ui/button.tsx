@@ -21,6 +21,8 @@ const buttonVariants = cva(
         secondary: "border bg-secondary text-secondary-foreground border border-secondary-border ",
         // Add a transparent border so that when someone toggles a border on later, it doesn't shift layout/size.
         ghost: "border border-transparent",
+        // 'link' variant used in several pages — renders as a plain text link-style button
+        link: "bg-transparent underline text-primary px-0 py-0",
       },
       // Heights are set as "min" heights, because sometimes Ai will place large amount of content
       // inside buttons. With a min-height they will look appropriate with small amounts of content,
@@ -46,13 +48,16 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button"
+  (
+    { className, variant, size, asChild = false, ...props }: ButtonProps,
+    ref: React.ForwardedRef<HTMLButtonElement>
+  ): React.ReactElement | null => {
+    const Comp: React.ElementType = asChild ? Slot : "button"
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        {...props}
+        ref={ref as any}
+        {...(props as any)}
       />
     )
   },
