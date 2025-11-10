@@ -1,6 +1,6 @@
-
-import React from 'react';
-import { useAuth } from '@/contexts/AuthContext';
+import React, { useEffect } from 'react';
+import { useAuth } from '../contexts/AuthContext'; // Adjusted import path to be relative
+import { useLocation } from 'wouter'; // Import useLocation for navigation
 import { Loader2 } from 'lucide-react';
 
 interface ProtectedRouteProps {
@@ -8,7 +8,20 @@ interface ProtectedRouteProps {
 }
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const { isAuthenticated, isLoading } = useAuth();
+  // Destructure userId for logging, though not used in UI logic
+  const { isAuthenticated, isLoading, user } = useAuth(); 
+  // Get the navigate function from wouter's useLocation hook
+  const [, navigate] = useLocation(); 
+
+  // Use useEffect to handle the side effect of navigation/redirection
+  useEffect(() => {
+    // Only attempt redirection once loading is complete
+    if (!isLoading && !isAuthenticated) {
+      console.log(`User ${user} is not authenticated. Redirecting to /auth.`);
+      // Correct way to redirect in wouter, respects hash routing
+      navigate('/auth'); 
+    }
+  }, [isAuthenticated, isLoading, navigate, user]);
 
   if (isLoading) {
     return (
@@ -21,11 +34,12 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
     );
   }
 
-  if (!isAuthenticated) {
-    // Redirect to auth page if not authenticated
-    window.location.href = '/auth';
-    return null;
+  // If authenticated, render the children
+  if (isAuthenticated) {
+    return <>{children}</>;
   }
 
-  return <>{children}</>;
+  // If not authenticated (and loading is done), we return null because the 
+  // useEffect hook above has already triggered the navigation.
+  return null;
 }
