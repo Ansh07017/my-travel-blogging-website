@@ -1,25 +1,28 @@
-import { Switch, Route } from "wouter";
-import { queryClient } from "./lib/queryClient";
+import { Switch, Route, Router } from "wouter";
+import { useHashLocation } from "wouter/use-hash-location";
+import { queryClient } from "./lib/queryClient"; // Attempting to resolve error by keeping it relative
 import { QueryClientProvider } from "@tanstack/react-query";
-import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { ThemeProvider } from "@/contexts/ThemeContext";
-import { AuthProvider } from "@/contexts/AuthContext";
-import ProtectedRoute from "@/components/ProtectedRoute";
-import Header from "@/components/Header";
-import HeroSection from "@/components/HeroSection";
-import ServicesSection from "@/components/ServicesSection";
-import AboutSection from "@/components/AboutSection";
-import GallerySection from "@/components/GallerySection";
-import BlogsSection from '@/components/BlogsSection';
-import InteractiveMap from '@/components/InteractiveMap';
-//import PricingSection from "@/components/PricingSection";
-//import ReviewsSection from "@/components/ReviewsSection";
-import ContactSection from "@/components/ContactSection";
-import Footer from "@/components/Footer";
-import CreateBlog from "@/pages/CreateBlog";
-import Auth from "@/pages/Auth";
-import NotFound from "@/pages/not-found";
+
+// Fixed imports: Replaced path aliases (@/) with relative paths (./)
+import { Toaster } from "./components/ui/toaster";
+import { TooltipProvider } from "./components/ui/tooltip";
+import { ThemeProvider } from "./contexts/ThemeContext";
+import { AuthProvider } from "./contexts/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Header from "./components/Header";
+import HeroSection from "./components/HeroSection";
+import ServicesSection from "./components/ServicesSection";
+import AboutSection from "./components/AboutSection";
+import GallerySection from "./components/GallerySection";
+import BlogsSection from './components/BlogsSection';
+import InteractiveMap from './components/InteractiveMap';
+//import PricingSection from "./components/PricingSection";
+//import ReviewsSection from "./components/ReviewsSection";
+import ContactSection from "./components/ContactSection";
+import Footer from "./components/Footer";
+import CreateBlog from "./pages/CreateBlog";
+import Auth from "./pages/Auth";
+import NotFound from "./pages/not-found";
 
 function Home() {
   return (
@@ -44,8 +47,8 @@ function Home() {
             </div>
           </section>
           {/* <ReviewsSection />
-<PricingSection />
-*/}
+          <PricingSection />
+          */}
           <ContactSection />
         </main>
         <Footer />
@@ -54,7 +57,8 @@ function Home() {
   );
 }
 
-function Router() {
+// Function renamed to RouterComponent to avoid conflict with the imported Router component
+function RouterComponent() { 
   return (
     <Switch>
       <Route path="/" component={Home} />
@@ -73,7 +77,10 @@ function App() {
         <AuthProvider>
           <TooltipProvider>
             <Toaster />
-            <Router />
+            {/* Wrapped the routes with Router and the Hash hook to fix GitHub Pages routing */}
+            <Router hook={useHashLocation}> 
+              <RouterComponent />
+            </Router>
           </TooltipProvider>
         </AuthProvider>
       </ThemeProvider>
